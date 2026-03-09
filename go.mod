@@ -1,6 +1,6 @@
 module github.com/whayn/ueboom-ctl
 
-go 1.25.7
+go 1.24.0
 
 require (
 	github.com/briandowns/spinner v1.23.2
