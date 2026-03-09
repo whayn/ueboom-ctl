@@ -6,7 +6,6 @@ A small Linux tool to turn UE Boom speakers on and off over Bluetooth.
 
 ### Install
 ```bash
-# Using Go
 go install github.com/whayn/ueboom-ctl/cmd/ueboom-ctl@latest
 ```
 
