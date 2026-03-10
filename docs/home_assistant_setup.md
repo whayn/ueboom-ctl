@@ -1,9 +1,9 @@
-# Controlling UE Boom from Home Assistant (HAOS/Supervised)
+# Controlling UE Boom from Home Assistant (HAOS)
 
-If you're running Home Assistant OS or Supervised, you're dealing with a bunch of Docker containers. Since `ueboom-ctl` needs direct access to your Bluetooth hardware, getting it to work from the "Core" container is a bit of a hack, but it works great. We're essentially going to run the command inside the SSH add-on because that's where the hardware access is.
+If you're running Home Assistant OS, you're dealing with a bunch of Docker containers. Since `ueboom-ctl` needs direct access to your Bluetooth hardware, getting it to work from the "Core" container is a bit of a hack, but it works great. We're essentially going to run the command inside the SSH add-on because that's where the hardware access is.
 
 ## What you'll need
-- **HAOS** or **Supervised** installed.
+- **HAOS** installed.
 - The **SSH & Web Terminal** add-on.
 - A working **Bluetooth adapter** (USB or built-in).
 
@@ -94,3 +94,6 @@ entity: switch.ue_boom_power
 name: Wake Boom
 icon: mdi:speaker-bluetooth
 ```
+
+> [!TIP]
+> This guide is currently tested on **HAOS**. If you've successfully set this up on a **Supervised** installation and want to share the details, feel free to open a Pull Request!
