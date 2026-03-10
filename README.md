@@ -35,7 +35,7 @@ make build
 This requires `make` and `go` to be installed.
 
 ## Home Assistant
-For a full guide on setting this up with **HAOS** or **Supervised** (including bypassing container permissions), see the [Home Assistant Setup Guide](./docs/home-assistant-setup.md).
+For a full guide on setting this up with **HAOS**(including bypassing container permissions), see the [Home Assistant Setup Guide](./docs/home-assistant-setup.md).
 
 Alternatively, add this to your `configuration.yaml` for direct desktop/server control:
 ```yaml
@@ -58,4 +58,4 @@ sudo setcap 'cap_net_raw,cap_net_admin+eip' ./ueboom-ctl
 I wrote a [full technical write-up](./docs/write-up.md) on how I reverse-engineered the protocol by sniffing Android app traffic if you're interested in the internals.
 
 ## License
-GPL-3.0
+[GPL-3.0](LICENSE)

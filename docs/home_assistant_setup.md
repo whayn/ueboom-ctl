@@ -2,6 +2,20 @@
 
 If you're running Home Assistant OS, you're dealing with a bunch of Docker containers. Since `ueboom-ctl` needs direct access to your Bluetooth hardware, getting it to work from the "Core" container is a bit of a hack, but it works great. We're essentially going to run the command inside the SSH add-on because that's where the hardware access is.
 
+> [!TIP]
+> This guide is currently tested on **HAOS**. If you've successfully set this up on a **Supervised** installation and want to share the details, feel free to open a Pull Request!
+
+## Table of Contents
+- [What you'll need](#what-youll-need)
+- [1. Sorting out permissions](#1-sorting-out-permissions)
+- [2. Placing the binary](#2-placing-the-binary)
+- [3. Pairing the speaker](#3-pairing-the-speaker)
+- [4. The Home Assistant integration](#4-the-home-assistant-integration)
+  - [Setting up SSH keys](#setting-up-ssh-keys)
+  - [Setting up the switch](#setting-up-the-switch)
+  - [Automation: Wake on music](#automation-wake-on-music)
+- [5. Dashboard button](#5-dashboard-button)
+
 ## What you'll need
 - **HAOS** installed.
 - The **SSH & Web Terminal** add-on.
@@ -16,7 +30,7 @@ The SSH add-on needs to be able to talk to your hardware.
 
 ## 2. Placing the binary
 
-You should put the `ueboom-ctl` binary in your `/config` folder. This is the easiest way to make sure both the Core container and the SSH add-on can see it.
+You should put the `ueboom-ctl` binary in your `/config` folder. This is the easiest way to make sure both the Core container and the SSH add-on can see it. You can download the [latest release](https://github.com/whayn/ueboom-ctl/releases/latest) from GitHub. 
 
 ```bash
 # Open your HA Terminal
@@ -38,19 +52,39 @@ We're going to pair the speaker through the CLI.
     ```
     Pick your speaker from the list. The tool will save your config to `/etc/ueboom/config.json` (this lives inside the add-on container).
 
-### Getting a "br-connection-unknown" error?
-Bluetooth on Linux is finicky. If it fails to connect, try manually "trusting" the speaker in the host's manager:
-1.  Type `bluetoothctl` and hit Enter.
-2.  Run `trust [YOUR_SPEAKER_MAC]`.
-3.  Maybe run `pair [YOUR_SPEAKER_MAC]` if it's still being difficult.
-4.  Type `exit` to get out.
+> [!WARNING]
+> **Getting a "br-connection-unknown" error?**
+> 
+> Bluetooth on Linux is finicky. If it fails to connect, try manually "trusting" the speaker in the host's manager:
+> 1.  Type `bluetoothctl` and hit Enter.
+> 2.  Run `trust [YOUR_SPEAKER_MAC]`.
+> 3.  Maybe run `pair [YOUR_SPEAKER_MAC]` if it's still being difficult.
+> 4.  Type `exit` to get out.
 
 ## 4. The Home Assistant integration
+
+### Setting up SSH keys:
+
+1. Open your SSH & Web Terminal and run these commands to create a password-less key:
+  ```bash
+  mkdir -p /config/.ssh
+  ssh-keygen -t rsa -b 4096 -f /config/.ssh/id_rsa -N ""
+  cat /config/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+  ```
+
+2. Test the connection from the Core container:
+  ```bash
+  ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no root@core-ssh 'echo "SSH works!"'
+  ```
+  If you see "SSH works!" you're all set.
+
+> [!NOTE]
+> The hostname is `core-ssh` for the official **SSH & Web Terminal** add-on. If you're using the Community **Advanced SSH** add-on, it's usually `a0d7b954-ssh` instead. Adjust the hostname in the YAML below accordingly.
+
 
 ### Setting up the switch
 We'll use a `command_line` switch. Because the binary runs in the SSH add-on, the Core container has to SSH into the add-on to actually fire the command.
 
-*Note: You'll need to set up SSH keys between Core and the add-on for this to work without asking for a password.*
 
 ```yaml
 # configuration.yaml
@@ -95,5 +129,4 @@ name: Wake Boom
 icon: mdi:speaker-bluetooth
 ```
 
-> [!TIP]
-> This guide is currently tested on **HAOS**. If you've successfully set this up on a **Supervised** installation and want to share the details, feel free to open a Pull Request!
+

@@ -2,6 +2,13 @@
 
 I wanted to turn my UE Boom on from my computer without having to reach for the physical button or the buggy official app. Here’s how I got it working.
 
+## Table of contents
+
+- [Sniffing the traffic](#sniffing-the-traffic)
+- [Testing it manually](#testing-it-manually)
+- [The Go struggle](#the-go-struggle)
+- [Final thoughts](#final-thoughts)
+
 ## Sniffing the traffic
 The first step was seeing what the official app actually sends. I enabled "Bluetooth HCI Snoop Log" on my Android phone, toggled the power in the app a few times, and moved the logs over to my PC.
 
