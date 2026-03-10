@@ -49,13 +49,13 @@ switch:
 ```
 
 ## Troubleshooting & Permissions
-Linux is picky about Bluetooth permissions. See the [Setup Guide](./docs/home-assistant-setup.md) for detailed HA troubleshooting, or run this with `sudo` locally:
+Linux is picky about Bluetooth permissions. See the [Setup Guide](./docs/home_assistant_setup.md) for detailed HA troubleshooting, or run this with `sudo` locally:
 ```bash
 sudo setcap 'cap_net_raw,cap_net_admin+eip' ./ueboom-ctl
 ```
 
 ## The Details
-I wrote a [full technical write-up](./docs/write-up.md) on how I reverse-engineered the protocol by sniffing Android app traffic if you're interested in the internals.
+I wrote a [full technical write-up](./docs/write_up.md) on how I reverse-engineered the protocol by sniffing Android app traffic if you're interested in the internals.
 
 ## License
 [GPL-3.0](LICENSE)
